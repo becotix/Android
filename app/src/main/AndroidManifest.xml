@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="co.becotix.becotix" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:name="com.activeandroid.app.Application"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="becotix.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+
+        <receiver android:name="co.becotix.becotix.StartBackgroundIntentReceiver" />
+
+        <service
+            android:name="co.becotix.becotix.BackgroundIntent"
+            android:exported="false" />
+
+        <activity
+            android:name="co.becotix.becotix.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="co.becotix.becotix.AboutActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="co.becotix.becotix.DashboardActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="co.becotix.becotix.StartStopsActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="co.becotix.becotix.DashboardActivity" >
+        </activity>
+        <activity
+            android:name="co.becotix.becotix.StartStopActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="co.becotix.becotix.StartStopsActivity" >
+        </activity>
+        <activity
+            android:name="co.becotix.becotix.TicketActivity"
+            android:label="@string/title_activity_ticket" >
+        </activity>
+        <activity
+            android:name="co.becotix.becotix.EndStopsActivity"
+            android:label="@string/title_activity_end_stops"
+            android:parentActivityName=".EndStopsActivity">
+        </activity>
+    </application>
+
+</manifest>
