@@ -40,14 +40,18 @@ public class Registration {
 
         mActivity = activity;
 
-        this.name = ((EditText) mActivity.findViewById(R.id.name)).getText().toString();
-        this.email = ((EditText) mActivity.findViewById(R.id.email)).getText().toString();
-        this.address_1 = ((EditText) mActivity.findViewById(R.id.address_1)).getText().toString();
-        this.address_2 = ((EditText) mActivity.findViewById(R.id.address_2)).getText().toString();
-        this.city = ((EditText) mActivity.findViewById(R.id.city)).getText().toString();
-        this.region = ((EditText) mActivity.findViewById(R.id.region)).getText().toString();
-        this.postcode = ((EditText) mActivity.findViewById(R.id.postcode)).getText().toString();
-        this.cc_number = ((EditText) mActivity.findViewById(R.id.cc_number)).getText().toString();
+        try {
+            this.name = ((EditText) mActivity.findViewById(R.id.name)).getText().toString();
+            this.email = ((EditText) mActivity.findViewById(R.id.email)).getText().toString();
+            this.address_1 = ((EditText) mActivity.findViewById(R.id.address_1)).getText().toString();
+            this.address_2 = ((EditText) mActivity.findViewById(R.id.address_2)).getText().toString();
+            this.city = ((EditText) mActivity.findViewById(R.id.city)).getText().toString();
+            this.region = ((EditText) mActivity.findViewById(R.id.region)).getText().toString();
+            this.postcode = ((EditText) mActivity.findViewById(R.id.postcode)).getText().toString();
+            this.cc_number = ((EditText) mActivity.findViewById(R.id.cc_number)).getText().toString();
+        } catch (NullPointerException e) {
+
+        }
         this.remoteId = 0;
 
         // TODO store securely
@@ -70,22 +74,26 @@ public class Registration {
 
     public void load() {
         SharedPreferences sharedPreferences = mActivity.getSharedPreferences(MainActivity.PREFS_NAME, 0);
-        this.name = sharedPreferences.getString(REGISTRATION_NAME, "");
-        this.email = sharedPreferences.getString(REGISTRATION_EMAIL, "");
-        this.address_1 = sharedPreferences.getString(REGISTRATION_ADDRESS_1, "");
-        this.address_2 = sharedPreferences.getString(REGISTRATION_ADDRESS_2, "");
-        this.city = sharedPreferences.getString(REGISTRATION_CITY, "");
-        this.region = sharedPreferences.getString(REGISTRATION_REGION, "");
-        this.postcode = sharedPreferences.getString(REGISTRATION_POSTCODE, "");
+        this.name = sharedPreferences.getString(REGISTRATION_NAME, "Nick Bolt");
+        this.email = sharedPreferences.getString(REGISTRATION_EMAIL, "email@nickbolt.co.uk");
+        this.address_1 = sharedPreferences.getString(REGISTRATION_ADDRESS_1, "123 Fake Street");
+        this.address_2 = sharedPreferences.getString(REGISTRATION_ADDRESS_2, "Fakestown");
+        this.city = sharedPreferences.getString(REGISTRATION_CITY, "Sheffield");
+        this.region = sharedPreferences.getString(REGISTRATION_REGION, "South Yorkshire");
+        this.postcode = sharedPreferences.getString(REGISTRATION_POSTCODE, "S2 1HG");
         this.remoteId = sharedPreferences.getInt(REMOTE_ID, 0);
 
-        ((EditText) mActivity.findViewById(R.id.name)).setText(this.name);
-        ((EditText) mActivity.findViewById(R.id.email)).setText(this.email);
-        ((EditText) mActivity.findViewById(R.id.address_1)).setText(this.address_1);
-        ((EditText) mActivity.findViewById(R.id.address_2)).setText(this.address_2);
-        ((EditText) mActivity.findViewById(R.id.city)).setText(this.city);
-        ((EditText) mActivity.findViewById(R.id.region)).setText(this.region);
-        ((EditText) mActivity.findViewById(R.id.postcode)).setText(this.postcode);
+        try {
+            ((EditText) mActivity.findViewById(R.id.name)).setText(this.name);
+            ((EditText) mActivity.findViewById(R.id.email)).setText(this.email);
+            ((EditText) mActivity.findViewById(R.id.address_1)).setText(this.address_1);
+            ((EditText) mActivity.findViewById(R.id.address_2)).setText(this.address_2);
+            ((EditText) mActivity.findViewById(R.id.city)).setText(this.city);
+            ((EditText) mActivity.findViewById(R.id.region)).setText(this.region);
+            ((EditText) mActivity.findViewById(R.id.postcode)).setText(this.postcode);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     public boolean isValid() {

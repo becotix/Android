@@ -19,6 +19,7 @@ import co.becotix.becotix.API.Request;
 import co.becotix.becotix.API.UrlBuilder;
 import co.becotix.becotix.DB.BusBeacon;
 import co.becotix.becotix.DB.StopInfo;
+import co.becotix.becotix.DB.Ticket;
 
 
 public class MainActivity extends Activity {
@@ -33,14 +34,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Registration registration = new Registration(this);
         if (registration.isRegistered()) {
-            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFS_NAME, 0);
-            boolean displayAbout = sharedPreferences.getBoolean(AboutActivity.DISPLAY_ABOUT, true);
-            if (displayAbout) {
-                goToAboutActivity();
-            }
-            else {
-                goToDashboardActivity();
-            }
+            goToDashboardActivity();
         }
     }
 
@@ -101,33 +95,37 @@ public class MainActivity extends Activity {
             @Override
             public void onSuccess(String response) {
                 try {
-                    // Process stops
-                    StopInfo.destroyAll();
-                    JSONObject jsonObject;
-                    jsonObject = new JSONObject(response);
-                    JSONArray stopInfos = jsonObject.getJSONArray("stops");
-                    for (int i = 0 ; i < stopInfos.length() ; i++) {
-                        JSONObject stopInfo = stopInfos.getJSONObject(i).getJSONObject("stop");
-                        StopInfo dbStopInfo = new StopInfo();
-                        dbStopInfo.name = stopInfo.getString("name");
-                        dbStopInfo.major = Integer.parseInt(stopInfo.getString("major"));
-                        dbStopInfo.minor = Integer.parseInt(stopInfo.getString("minor"));
-                        dbStopInfo.save();
-                    }
-                    Log.v(LOG_TAG, "Created " + StopInfo.all().size() + " stops");
+                    JSONObject jsonObject = new JSONObject(response);
 
                     // Process bus beacons
                     BusBeacon.destroyAll();
                     JSONArray busBeacons = jsonObject.getJSONArray("bus_beacons");
                     for (int i = 0 ; i < busBeacons.length() ; i++) {
-                        JSONObject busBeacon = busBeacons.getJSONObject(i).getJSONObject("bus_beacon");
+                        JSONObject busBeacon = busBeacons.getJSONObject(i);
                         BusBeacon dbBusBeacon = new BusBeacon();
+                        dbBusBeacon.remote_id = Long.parseLong(busBeacon.getString("id"));
                         dbBusBeacon.major = Integer.parseInt(busBeacon.getString("major"));
                         dbBusBeacon.minor = Integer.parseInt(busBeacon.getString("minor"));
                         dbBusBeacon.save();
                     }
                     Log.v(LOG_TAG, "Created " + BusBeacon.all().size() + " bus beacons");
-                    goToAboutActivity();
+
+                    // Process stops
+                    StopInfo.destroyAll();
+                    JSONArray stopInfos = jsonObject.getJSONArray("stops");
+                    for (int i = 0 ; i < stopInfos.length() ; i++) {
+                        JSONObject stopInfo = stopInfos.getJSONObject(i);
+                        StopInfo dbStopInfo = new StopInfo();
+                        dbStopInfo.name = stopInfo.getString("name");
+                        dbStopInfo.remoteId = stopInfo.getLong("id");
+                        BusBeacon busBeacon = BusBeacon.find(Long.parseLong(stopInfo.getString("bid")));
+                        dbStopInfo.major = busBeacon.major;
+                        dbStopInfo.minor = busBeacon.minor;
+                        dbStopInfo.save();
+                    }
+                    Log.v(LOG_TAG, "Created " + StopInfo.all().size() + " stops");
+
+                    sendTicketsRequest(context);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -140,18 +138,41 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void goToAboutActivity() {
-        Intent intent = new Intent(this, AboutActivity.class);
-        startActivity(intent);
-        finish();
+    private void sendTicketsRequest(final Context context) {
+        Request request = new Request(context);
+        UrlBuilder urlBuilder = new UrlBuilder(context);
+        request.processGet(urlBuilder.tickets(), new Request.OnResultListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    Ticket.destroyAll();
+                    JSONArray tickets = jsonObject.getJSONArray("tickets");
+                    for (int i = 0 ; i < tickets.length() ; i++) {
+                        JSONObject ticket = tickets.getJSONObject(i);
+                        Ticket dbTicket = new Ticket();
+                        dbTicket.word = ticket.getString("word");
+                        dbTicket.color = ticket.getString("colour");
+                        dbTicket.save();
+                    }
+                    Log.v(LOG_TAG, "Created " + Ticket.all().size() + " tickets");
+
+                    goToDashboardActivity();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, "Ticket request failure", Toast.LENGTH_SHORT);
+                }
+            }
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
     private void goToDashboardActivity() {
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
-
-        Intent backgroundIntent = new Intent(this, BackgroundIntent.class);
-        startService(backgroundIntent);
         finish();
     }
 }

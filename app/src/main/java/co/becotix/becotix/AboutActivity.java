@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import co.becotix.becotix.API.Registration;
+
 
 public class AboutActivity extends Activity {
 
@@ -16,6 +18,11 @@ public class AboutActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Registration registration = new Registration(this);
+        registration.load();
+        if (registration.isRegistered()) {
+            goToDashboardActivity();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         Button button = (Button) findViewById(R.id.confirm);
@@ -26,17 +33,18 @@ public class AboutActivity extends Activity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(DISPLAY_ABOUT, false);
                 editor.commit();
-                goToDashboardActivity();
+                goToRegisterActivity();
             }
         });
+    }
+
+    private void goToRegisterActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void goToDashboardActivity() {
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
-
-        Intent backgroundIntent = new Intent(this, BackgroundIntent.class);
-        startService(backgroundIntent);
-        finish();
     }
 }

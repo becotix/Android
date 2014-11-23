@@ -9,6 +9,8 @@ import java.util.List;
 
 @Table(name="stop_infos")
 public class StopInfo extends Model {
+    @Column(name="remote_id")
+    public long remoteId;
     @Column(name = "name")
     public String name;
     @Column(name = "major")
@@ -28,5 +30,13 @@ public class StopInfo extends Model {
 
     public static StopInfo find(long id) {
         return new Select().from(StopInfo.class).where("id = ?", id).executeSingle();
+    }
+
+    public static StopInfo findByMajor(long id) {
+        return new Select().from(StopInfo.class).where("major = ?", id).executeSingle();
+    }
+
+    public static StopInfo findByRemoteId(long id) {
+        return new Select().from(StopInfo.class).where("remote_id = ?", id).executeSingle();
     }
 }

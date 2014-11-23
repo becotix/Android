@@ -42,4 +42,10 @@ public class UrlBuilder {
         return builder.toString();
     }
 
+    public String tickets() {
+        Uri.Builder builder = baseUriBuilder()
+                .appendPath("tickets");
+        return builder.toString();
+    }
+
 }

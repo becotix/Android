@@ -1,6 +1,7 @@
 package co.becotix.becotix;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +26,14 @@ public class EndStopsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 StopInfo stopInfo = stopAdapter.getItem(position);
+                goToEndStopActivity(stopInfo);
             }
         });
+    }
+
+    private void goToEndStopActivity(StopInfo stopInfo) {
+        Intent intent = new Intent(this, EndStopActivity.class);
+        intent.putExtra(EndStopActivity.STOP_INFO_ID, stopInfo.getId());
+        startActivity(intent);
     }
 }

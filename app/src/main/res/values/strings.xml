@@ -20,17 +20,22 @@
     <string name="activity_registration_error_message">Please complete all fields</string>
 
     <!-- Activity About -->
-    <string name="activity_about_text">Lorem</string>
-    <string name="title_activity_dashboard">DashboardActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_start_stops">StartStopsActivity</string>
-    <string name="title_activity_start_stop">StartStopActivity</string>
+    <string name="activity_about_text_1">Welcome to Becontix instant travel</string>
+    <string name="activity_about_text_2">Becontix is the easy way to travel and save.</string>
+    <string name="activity_about_text_3">You will always be charged for the best value ticket on any one day.</string>
+    <string name="activity_about_text_4">First you need to register, we will not charge you until after you have travelled.</string>
 
     <!-- Activity Start Stop -->
     <string name="activity_start_stop_intro">This is your current stop</string>
-    <string name="activity_start_stop_confirm_message">Do you want to start journey</string>
+    <string name="activity_start_stop_confirm_message">Do you want to start journey here?</string>
     <string name="title_activity_ticket">TicketActivity</string>
     <string name="title_activity_end_stops">EndStopsActivity</string>
+    <string name="title_activity_end_stop">EndStopActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Activity End Stop -->
+    <string name="activity_end_stop_confirm_message">Do you want to end journey here?</string>
+    <string name="title_activity_history">HistoryActivity</string>
 
 </resources>

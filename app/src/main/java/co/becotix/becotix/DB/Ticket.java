@@ -11,8 +11,10 @@ import java.util.List;
 public class Ticket extends Model {
     @Column(name = "word")
     public String word;
-    @Column(name = "rgb")
-    public String rgb;
+    @Column(name = "color")
+    public String color;
+    @Column(name = "date")
+    public String date;
 
     public static List<Ticket> all() {
         return new Select().from(Ticket.class).execute();

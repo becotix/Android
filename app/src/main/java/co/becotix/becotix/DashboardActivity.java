@@ -8,8 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.estimote.sdk.BeaconManager;
+import com.estimote.sdk.Region;
 
-public class DashboardActivity extends Activity {
+
+public class DashboardActivity extends ScanningActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +25,24 @@ public class DashboardActivity extends Activity {
                 goToStartStopsActivity();
             }
         });
+        Button historyButton = (Button) findViewById(R.id.history);
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHistoryActivity();
+            }
+        });
     }
 
     private void goToStartStopsActivity() {
         Intent intent = new Intent(this, StartStopsActivity.class);
         startActivity(intent);
     }
+
+    private void goToHistoryActivity() {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+
 }

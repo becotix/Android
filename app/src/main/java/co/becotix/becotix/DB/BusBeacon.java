@@ -9,6 +9,8 @@ import java.util.List;
 
 @Table(name="bus_beacons")
 public class BusBeacon extends Model {
+    @Column(name="remote_id")
+    public long remote_id;
     @Column(name = "major")
     public Integer major;
     @Column(name = "minor")
@@ -22,5 +24,9 @@ public class BusBeacon extends Model {
         for (BusBeacon stopInfo : all()) {
             stopInfo.delete();
         }
+    }
+
+    public static BusBeacon find(long remoteId) {
+        return new Select().all().from(BusBeacon.class).where("remote_id = ?", remoteId).executeSingle();
     }
 }

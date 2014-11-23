@@ -10,13 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import co.becotix.becotix.DB.Journey;
 import co.becotix.becotix.DB.StopInfo;
 
 
-public class StartStopActivity extends Activity {
+public class EndStopActivity extends Activity {
 
     public static final String STOP_INFO_ID = "STOP_INFO_ID";
 
@@ -25,6 +22,7 @@ public class StartStopActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_end_stop);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -33,8 +31,6 @@ public class StartStopActivity extends Activity {
         if (savedInstanceState != null) {
             mStopInfo = StopInfo.find(savedInstanceState.getInt(STOP_INFO_ID));
         }
-
-        setContentView(R.layout.activity_start_stop);
 
         TextView stopName = (TextView) findViewById(R.id.stop_name);
         stopName.setText(mStopInfo.name);
@@ -46,16 +42,16 @@ public class StartStopActivity extends Activity {
             @Override
             public void onClick(View v) {
                 JourneyManager journeyManager = new JourneyManager(fContext);
-                journeyManager.addStart(mStopInfo);
-                goToTicketActivity();
+                journeyManager.addEnd(mStopInfo);
+                goToDashboardActivity();
             }
         });
+
         Button negativeButton = (Button) findViewById(R.id.button_negative);
         negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-                finish();
             }
         });
     }
@@ -66,8 +62,8 @@ public class StartStopActivity extends Activity {
         super.onSaveInstanceState(outState);
     }
 
-    private void goToTicketActivity() {
-        Intent intent = new Intent(this, TicketActivity.class);
+    private void goToDashboardActivity() {
+        Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
         finish();
     }
