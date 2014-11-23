@@ -25,4 +25,8 @@ public class Ticket extends Model {
             stopInfo.delete();
         }
     }
+
+    public static Ticket find(long id) {
+        return new Select().from(Ticket.class).where("id = ?", id).executeSingle();
+    }
 }
