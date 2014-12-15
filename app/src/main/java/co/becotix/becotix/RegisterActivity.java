@@ -22,16 +22,16 @@ import co.becotix.becotix.DB.StopInfo;
 import co.becotix.becotix.DB.Ticket;
 
 
-public class MainActivity extends Activity {
+public class RegisterActivity extends Activity {
 
     public final static String PREFS_NAME = "myPrefs";
 
-    private final static String LOG_TAG = MainActivity.class.getName();
+    private final static String LOG_TAG = RegisterActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register);
         Registration registration = new Registration(this);
         if (registration.isRegistered()) {
             goToDashboardActivity();
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int remoteId = Integer.parseInt(jsonObject.getString("uid"));
-                    SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+                    SharedPreferences sharedPreferences = getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt(Registration.REMOTE_ID, remoteId);
                     editor.commit();
@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 
                     // Process bus beacons
                     BusBeacon.destroyAll();
-                    JSONArray busBeacons = jsonObject.getJSONArray("bus_beacons");
+                    JSONArray busBeacons = jsonObject.getJSONArray("beacons");
                     for (int i = 0 ; i < busBeacons.length() ; i++) {
                         JSONObject busBeacon = busBeacons.getJSONObject(i);
                         BusBeacon dbBusBeacon = new BusBeacon();
@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
                         StopInfo dbStopInfo = new StopInfo();
                         dbStopInfo.name = stopInfo.getString("name");
                         dbStopInfo.remoteId = stopInfo.getLong("id");
-                        BusBeacon busBeacon = BusBeacon.find(Long.parseLong(stopInfo.getString("bid")));
+                        BusBeacon busBeacon = BusBeacon.find(Long.parseLong(stopInfo.getString("beacon_id")));
                         dbStopInfo.major = busBeacon.major;
                         dbStopInfo.minor = busBeacon.minor;
                         dbStopInfo.save();

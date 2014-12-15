@@ -2,10 +2,9 @@ package co.becotix.becotix.API;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.EditText;
 
-import co.becotix.becotix.MainActivity;
+import co.becotix.becotix.RegisterActivity;
 import co.becotix.becotix.R;
 
 public class Registration {
@@ -41,7 +40,7 @@ public class Registration {
         mActivity = activity;
 
         try {
-            this.name = ((EditText) mActivity.findViewById(R.id.name)).getText().toString();
+            this.name = ((EditText) mActivity.findViewById(R.id.first_name)).getText().toString();
             this.email = ((EditText) mActivity.findViewById(R.id.email)).getText().toString();
             this.address_1 = ((EditText) mActivity.findViewById(R.id.address_1)).getText().toString();
             this.address_2 = ((EditText) mActivity.findViewById(R.id.address_2)).getText().toString();
@@ -59,7 +58,7 @@ public class Registration {
     }
 
     public boolean save() {
-        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(REGISTRATION_NAME, this.name);
         editor.putString(REGISTRATION_EMAIL, this.email);
@@ -73,7 +72,7 @@ public class Registration {
     }
 
     public void load() {
-        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
         this.name = sharedPreferences.getString(REGISTRATION_NAME, "Nick Bolt");
         this.email = sharedPreferences.getString(REGISTRATION_EMAIL, "email@nickbolt.co.uk");
         this.address_1 = sharedPreferences.getString(REGISTRATION_ADDRESS_1, "123 Fake Street");
@@ -84,7 +83,7 @@ public class Registration {
         this.remoteId = sharedPreferences.getInt(REMOTE_ID, 0);
 
         try {
-            ((EditText) mActivity.findViewById(R.id.name)).setText(this.name);
+            ((EditText) mActivity.findViewById(R.id.first_name)).setText(this.name);
             ((EditText) mActivity.findViewById(R.id.email)).setText(this.email);
             ((EditText) mActivity.findViewById(R.id.address_1)).setText(this.address_1);
             ((EditText) mActivity.findViewById(R.id.address_2)).setText(this.address_2);

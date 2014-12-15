@@ -6,7 +6,8 @@
 
     <!-- Activity Main -->
     <string name="activity_main_title">Registration</string>
-    <string name="activity_main_name">Name</string>
+    <string name="activity_main_first_name">First name</string>
+    <string name="activity_main_last_name">Last name</string>
     <string name="activity_main_address_1">Address line 1</string>
     <string name="activity_main_address_2">Address line 2</string>
     <string name="activity_main_address_city">City</string>
@@ -15,7 +16,10 @@
     <string name="activity_main_email">Email</string>
     <string name="activity_main_password">Password</string>
     <string name="activity_main_password_confirmation">Password confirmation</string>
-    <string name="activity_main_password_cc_number">Credit card number</string>
+    <string name="activity_main_cc_number">Credit card number</string>
+    <string name="activity_main_cc_name">Card holder name</string>
+    <string name="activity_main_expiry">Expiry date</string>
+    <string name="activity_main_csv">CSV number</string>
     <string name="activity_main_submit">Submit</string>
     <string name="activity_registration_error_message">Please complete all fields</string>
 
@@ -24,6 +28,7 @@
     <string name="activity_about_text_2">Becontix is the easy way to travel and save.</string>
     <string name="activity_about_text_3">You will always be charged for the best value ticket on any one day.</string>
     <string name="activity_about_text_4">First you need to register, we will not charge you until after you have travelled.</string>
+    <string name="activity_about_text_5">YOU NEED TO BE CONNECTED TO THE INTERNET FOR REGISTRATION</string>
 
     <!-- Activity Start Stop -->
     <string name="activity_start_stop_intro">This is your current stop</string>

@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 import co.becotix.becotix.DB.Journey;
 import co.becotix.becotix.DB.StopInfo;
@@ -31,7 +28,7 @@ public class JourneyManager {
         journey.start_time = currentTime();
         journey.save();
 
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(CURRENT_JOURNEY_ID, journey.getId());
         editor.commit();
@@ -44,14 +41,14 @@ public class JourneyManager {
         journey.end_time = currentTime();
         journey.save();
 
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(CURRENT_JOURNEY_ID);
         editor.commit();
     }
 
     public Journey current() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
         long current_id = sharedPreferences.getLong(CURRENT_JOURNEY_ID, 0);
         if (current_id != 0) {
             Journey journey = Journey.find(current_id);

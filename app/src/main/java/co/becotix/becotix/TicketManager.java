@@ -16,7 +16,7 @@ public class TicketManager {
     }
 
     public Ticket currentOrNew() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
         long currentTicketId = sharedPreferences.getLong(CURRENT_TICKET, 0);
         if (currentTicketId != 0) {
             Ticket ticket = Ticket.find(currentTicketId);
@@ -33,7 +33,7 @@ public class TicketManager {
     }
 
     public void closeCurrent() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(CURRENT_TICKET);
         editor.commit();

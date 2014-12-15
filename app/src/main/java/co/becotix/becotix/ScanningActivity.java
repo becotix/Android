@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -50,7 +49,7 @@ public class ScanningActivity extends Activity {
                 if (beacons.size() > 0) {
                     Beacon beacon = beacons.get(0);
                     StopInfo stopInfo = StopInfo.findByMajor(beacon.getMajor());
-                    SharedPreferences sharedPreferences = fContext.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+                    SharedPreferences sharedPreferences = fContext.getSharedPreferences(RegisterActivity.PREFS_NAME, 0);
                     int lastMajor = sharedPreferences.getInt(LAST_MAJOR, 0);
                     if (lastMajor != beacon.getMajor() && stopInfo != null) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();

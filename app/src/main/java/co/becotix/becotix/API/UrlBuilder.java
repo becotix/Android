@@ -17,12 +17,13 @@ public class UrlBuilder {
     private Uri.Builder baseUriBuilder() {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
-                .authority("54.148.192.172");
+                .authority("becotix.herokuapp.com");
         return builder;
     }
 
     public String registration(Registration pRegistration) {
         Uri.Builder builder = baseUriBuilder()
+                .appendPath("api")
                 .appendPath("register")
                 .appendQueryParameter("name", pRegistration.name)
                 .appendQueryParameter("email", pRegistration.email)
@@ -38,12 +39,14 @@ public class UrlBuilder {
 
     public String stopInfo() {
         Uri.Builder builder = baseUriBuilder()
+                .appendPath("api")
                 .appendPath("stop_info");
         return builder.toString();
     }
 
     public String tickets() {
         Uri.Builder builder = baseUriBuilder()
+                .appendPath("api")
                 .appendPath("tickets");
         return builder.toString();
     }
